@@ -14,6 +14,7 @@ On large jsons:
 
 
 import time
+# from v10_cpp_openmp.test import gt_json
 from v1_python.py_evaluator import measure_py_evaluator_time
 from v2_numpy.np_evaluator import measure_np_evaluator_time
 from v3_jit_functional.jit_evaluator import measure_jit_evaluator_time
@@ -23,6 +24,7 @@ from v6_parallel_cython.evaluator import Evaluator as CyParallelEvaluator
 from v7_cpp.cpp_evaluator import CppEvaluator
 from v8_cpp_parallel.parallel_cpp_evaluator import ParallelCppEvaluator
 from v9_cpp_parallel_shared_mutex.shared_mutex_parallel_evaluator import SharedMutexParallelCppEvaluator
+from v10_cpp_openmp.openmp_evaluator import OpenmpEvaluator
 
 def check_evaluator_time(module, name, gt_json_path, pred_json_path, input_tp_ids, input_fp_ids, input_fn_ids):
     evaluator = module(gt_json_path, pred_json_path)
@@ -48,7 +50,7 @@ if __name__ == "__main__":
     check_evaluator_time(CppEvaluator, "C++ Evaluator", gt_json_path, pred_json_path, tp_ids, fp_ids, fn_ids)
     check_evaluator_time(ParallelCppEvaluator, "C++ Parallel Evaluator", gt_json_path, pred_json_path, tp_ids, fp_ids, fn_ids)
     check_evaluator_time(SharedMutexParallelCppEvaluator, "C++ Parallel SharedMutex Evaluator", gt_json_path, pred_json_path, tp_ids, fp_ids, fn_ids)
-
+    # check_evaluator_time(OpenmpEvaluator, "C++ OpenMP", gt_json_path, pred_json_path, tp_ids, fp_ids, fn_ids)
 
 
 
