@@ -55,7 +55,7 @@ We tested the algorithms on 2 different sizes of jsons.
 |    5    |           Cython            |        7.62609         |   7    |
 |    6    |       Cython Parallel       |        18.65183        |   8    |
 |    7    |             C++             |        0.63481         |   4    |
-|    8    |        C++ Parallel         |        0.05023         |   1    |
+|    8    |        C++ Parallel         |        0.05023         | :one:  |
 |    9    | C++ Parallel + Shared Mutex |        0.53730         |   3    |
 |   10    |     C++ OpenMP Parallel     |        0.05228         |   2    |
 
