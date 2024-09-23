@@ -46,15 +46,15 @@ We tested the algorithms on 2 different sizes of jsons.
 
 ## JSONS with 99K annotations:
 
-| version |            name             | process time (seconds) |      RANK #       |
-|:-------:|:---------------------------:|:----------------------:|:-----------------:|
-|    1    |        basic python         |          125           |         9         |
-|    2    |            numpy            |          469           |        10         |
-|    3    |             JIT             |         3.8314         |         6         |
-|    4    |           Tai-Chi           |         2.2207         |         5         |
-|    5    |           Cython            |        7.62609         |         7         |
-|    6    |       Cython Parallel       |        18.65183        |         8         |
-|    7    |             C++             |        0.63481         |         4         |
+| version |              name               | process time (seconds) |      RANK #       |
+|:-------:|:-------------------------------:|:----------------------:|:-----------------:|
+|    1    |          basic python           |          125           |         9         |
+|    2    |              numpy              |          469           |        10         |
+|    3    |               JIT               |         3.8314         |         6         |
+|    4    |             Tai-Chi             |         2.2207         |         5         |
+|    5    |             Cython              |        7.62609         |         7         |
+|    6    |         Cython Parallel         |        18.65183        |         8         |
+|    7    |               C++               |        0.63481         |         4         |
 |    8    |        **C++ Parallel**         |        0.05023         | :1st_place_medal: |
 |    9    | **C++ Parallel + Shared Mutex** |        0.53730         | :3rd_place_medal: |
 |   10    |     **C++ OpenMP Parallel**     |        0.05228         | :2nd_place_medal: |
