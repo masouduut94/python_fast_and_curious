@@ -59,6 +59,6 @@ We tested the algorithms on 2 different sizes of jsons.
 |    9    | C++ Parallel + Shared Mutex |        0.53730         | :three: |
 |   10    |     C++ OpenMP Parallel     |        0.05228         |  :two:  |
 
-
+:first_place_medal:
 
 
