@@ -90,14 +90,11 @@ class Evaluator:
         return tp_ids, fp_ids, fn_ids
 
 
-def measure_np_evaluator_time(gt_json_path: str, pred_json_path: str, input_tp_ids: List[int],
-                              input_fp_ids: List[int], input_fn_ids: List[int]):
+def measure_np_evaluator_time(gt_json_path: str, pred_json_path: str):
     evaluator = Evaluator(ground_truth_json=gt_json_path, predictions_json=pred_json_path)
     t1 = time()
     tp_ids, fp_ids, fn_ids = evaluator.evaluate()
     t2 = time()
-    print(f"Execution time: {t2 - t1:.4f} seconds")
-    assert sorted(tp_ids) == sorted(input_tp_ids), "TP doesn't match!"
-    assert sorted(fp_ids) == sorted(input_fp_ids), "FP doesn't match!"
-    assert sorted(fn_ids) == sorted(input_fn_ids), "FN doesn't match!"
+
+    return t2 - t1, sorted(tp_ids), sorted(fp_ids), sorted(fn_ids)
 

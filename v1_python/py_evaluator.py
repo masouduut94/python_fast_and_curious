@@ -133,107 +133,11 @@ class Evaluator:
 
         return tp_ids, fp_ids, fn_ids
 
-
-def plot_results(ground_truth_boxes, predicted_boxes, tp_ids: List[int], fp_ids: List[int],
-                 fn_ids: List[int], image_width: int, image_height: int):
-    fig, ax = plt.subplots(1, figsize=(10, 10))
-    ax.set_xlim(0, image_width)
-    ax.set_ylim(0, image_height)
-
-    for bbox in ground_truth_boxes:
-        if bbox.annotation_id in fn_ids:
-            color = 'yellow'
-            text = 'FN'
-            rectangle = patches.Rectangle(
-                (bbox.x1, bbox.y1),
-                bbox.w,
-                bbox.h,
-                linewidth=2,
-                edgecolor=color,
-                facecolor='none'
-            )
-            ax.add_patch(rectangle)
-
-            rx, ry = rectangle.get_xy()
-            cx = rx + rectangle.get_width() / 2.0
-            cy = ry + rectangle.get_height() / 2.0
-
-            ax.annotate(
-                text,
-                (cx, cy),
-                color=color,
-                weight='bold',
-                fontsize=10,
-                ha='center',
-                va='center'
-            )
-
-    for bbox in predicted_boxes:
-        if bbox.annotation_id in fp_ids:
-            color = 'red'
-            text = 'FP'
-            rectangle = patches.Rectangle(
-                (bbox.x1, bbox.y1),
-                bbox.w,
-                bbox.h,
-                linewidth=2,
-                edgecolor=color,
-                facecolor='none',
-                linestyle='dashed'
-            )
-            ax.add_patch(rectangle)
-
-            rx, ry = rectangle.get_xy()
-            cx = rx + rectangle.get_width() / 2.0
-            cy = ry + rectangle.get_height() / 2.0
-
-            ax.annotate(
-                text,
-                (cx, cy),
-                color=color,
-                weight='bold',
-                fontsize=10,
-                ha='center',
-                va='center'
-            )
-        elif bbox.annotation_id in tp_ids:
-            color = 'green'
-            text = 'TP'
-            rectangle = patches.Rectangle(
-                (bbox.x1, bbox.y1),
-                bbox.w,
-                bbox.h,
-                linewidth=2,
-                edgecolor=color,
-                facecolor='none',
-                linestyle='dashed'
-            )
-            ax.add_patch(rectangle)
-
-            rx, ry = rectangle.get_xy()
-            cx = rx + rectangle.get_width() / 2.0
-            cy = ry + rectangle.get_height() / 2.0
-
-            ax.annotate(
-                text,
-                (cx, cy),
-                color=color,
-                weight='bold',
-                fontsize=10,
-                ha='center',
-                va='center'
-            )
-
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
-    plt.gca().invert_yaxis()  # Invert y-axis to match typical image coordinates
-    plt.show()
-
 def measure_py_evaluator_time(gt_json_path, pred_json_path):
     evaluator = Evaluator(gt_json_path, pred_json_path)
     t1 = time()
     tp_ids, fp_ids, fn_ids = evaluator.evaluate()
     t2 = time()
-    print(f"Execution time: {t2 - t1:.4f} seconds")
-    return tp_ids, fp_ids, fn_ids
+    elapsed_time = t2 - t1
+    return elapsed_time, sorted(tp_ids), sorted(fp_ids), sorted(fn_ids)
 

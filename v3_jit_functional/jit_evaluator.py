@@ -94,28 +94,11 @@ def evaluate(gt_boxes: np.ndarray,
     return tp_pred_ids[:tp_pred_count], fp_pred_ids[:fp_pred_count], fn_gt_ids[:fn_gt_count]
 
 
-def measure_jit_evaluator_time(gt_json_path, pred_json_path, input_tp_ids, input_fp_ids, input_fn_ids):
+def measure_jit_evaluator_time(gt_json_path, pred_json_path):
     ground_truth_boxes = load_boxes_from_json(gt_json_path)
     predicted_boxes = load_boxes_from_json(pred_json_path)
 
     t1 = time()
     tp_ids, fp_ids, fn_ids = evaluate(ground_truth_boxes, predicted_boxes)
     t2 = time()
-    print(f"JIT | Execution Time: {t2 - t1: .4f} seconds")
-    assert sorted(tp_ids) == sorted(input_tp_ids), "TP does not match!"
-    assert sorted(fp_ids) == sorted(input_fp_ids), "FP does not match!"
-    assert sorted(fn_ids) == sorted(input_fn_ids), "FN does not match!"
-
-
-if __name__ == "__main__":
-    import time
-
-    start_time = time.time()
-    ground_truth_boxes = load_boxes_from_json("../small_jsons/ground_truths.json")
-    predicted_boxes = load_boxes_from_json("../small_jsons/predictions.json")
-    tp_ids, fp_ids, fn_ids = evaluate(ground_truth_boxes, predicted_boxes)
-
-    print("Execution Time: %s seconds" % (time.time() - start_time))
-    print("True Positive Predictions:", len(tp_ids))
-    print("False Positive Predictions:", len(fp_ids))
-    print("False Negative Ground Truths:", len(fn_ids))
+    return t2 - t1, sorted(tp_ids), sorted(fp_ids), sorted(fn_ids)

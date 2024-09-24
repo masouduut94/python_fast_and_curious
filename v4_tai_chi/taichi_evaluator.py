@@ -86,19 +86,12 @@ def taichi_evaluate(ground_truth_json: str, predictions_json: str):
     initialize_boxes(predictions_data['annotations'], pred_boxes)
     evaluate(num_gt_boxes, num_pred_boxes, gt_boxes, pred_boxes, tp_ids, fp_ids, fn_ids)
     t2 = time()
-    print(f"Tai-Chi | Execution Time: {t2 - t1: .4f} seconds")
-
-    return tp_ids.to_numpy(), fp_ids.to_numpy(), fn_ids.to_numpy()
+    return t2 - t1, tp_ids.to_numpy(), fp_ids.to_numpy(), fn_ids.to_numpy()
 
 
-def measure_taichi_evaluator_time(gt_json_path, pred_json_path, input_tp_ids, input_fp_ids, input_fn_ids):
-    tp_ids, fp_ids, fn_ids = taichi_evaluate(gt_json_path, pred_json_path)
+def measure_taichi_evaluator_time(gt_json_path, pred_json_path):
+    elapsed_time, tp_ids, fp_ids, fn_ids = taichi_evaluate(gt_json_path, pred_json_path)
     tp_ids = [tp for tp in tp_ids if tp != 0]
     fp_ids = [fp for fp in fp_ids if fp != 0]
     fn_ids = [fn for fn in fn_ids if fn != 0]
-    assert sorted(input_tp_ids) == sorted(tp_ids)
-    assert sorted(input_fp_ids) == sorted(fp_ids)
-    assert sorted(input_fn_ids) == sorted(fn_ids)
-
-
-
+    return elapsed_time, sorted(tp_ids), sorted(fp_ids), sorted(fn_ids)
