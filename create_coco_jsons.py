@@ -14,7 +14,7 @@ def create_test_data():
     category_id = 1
     annotation_id = 1
 
-    # Generate 1500 True Positives (matching boxes in GT and PREDS)
+    # Generate True Positives
     for i in range(1500):
         x1 = random.randint(0, 500)
         y1 = random.randint(0, 500)
@@ -32,7 +32,6 @@ def create_test_data():
         }
         ground_truth["annotations"].append(gt_box)
 
-        # Slightly adjust the predicted box to ensure it overlaps with the GT box
         pred_box = {
             "annotation_id": annotation_id,
             "image_id": image_id,
@@ -44,10 +43,9 @@ def create_test_data():
         }
 
         predictions["annotations"].append(pred_box)
-
         annotation_id += 1
 
-    # Generate 300 False Positives (boxes in PREDS but not in GT)
+    # Generate False Positives
     for i in range(1500, 1800):
         x1 = random.randint(0, 500)
         y1 = random.randint(0, 500)
@@ -67,7 +65,7 @@ def create_test_data():
 
         annotation_id += 1
 
-    # Generate 500 False Negatives (boxes in GT but not in PREDS)
+    # Generate False Negatives
     for i in range(1800, 2300):
         x1 = random.randint(0, 500)
         y1 = random.randint(0, 500)

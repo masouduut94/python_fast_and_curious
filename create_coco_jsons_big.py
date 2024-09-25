@@ -2,7 +2,7 @@ import json
 import random
 
 
-def create_large_test_data():
+def create_test_data():
     ground_truth = {
         "annotations": []
     }
@@ -14,13 +14,18 @@ def create_large_test_data():
     category_id = 1
     annotation_id = 1
 
-    # Generate 85,000 True Positives (matching boxes in GT and PREDS)
-    for i in range(85000):
+    # Target values for proportions
+    n1 = 80000
+    n2 = 20000
+    n3 = 2000
+
+    for i in range(n1):
         x1 = random.randint(0, 500)
         y1 = random.randint(0, 500)
         w = random.randint(20, 50)
         h = random.randint(20, 50)
 
+        # Ground truth box (matching GT and prediction for TP)
         gt_box = {
             "annotation_id": annotation_id,
             "image_id": image_id,
@@ -32,7 +37,7 @@ def create_large_test_data():
         }
         ground_truth["annotations"].append(gt_box)
 
-        # Slightly adjust the predicted box to ensure it overlaps with the GT box
+        # Prediction box (slightly varied to simulate IoU)
         pred_box = {
             "annotation_id": annotation_id,
             "image_id": image_id,
@@ -42,15 +47,13 @@ def create_large_test_data():
             "w": w,
             "h": h
         }
-
         predictions["annotations"].append(pred_box)
 
         annotation_id += 1
 
-    # Generate 5,050 False Positives (boxes in PREDS but not in GT)
-    for i in range(85000, 90050):
-        x1 = random.randint(0, 500)
-        y1 = random.randint(0, 500)
+    for i in range(n2):
+        x1 = random.randint(0, 600)
+        y1 = random.randint(0, 600)
         w = random.randint(20, 50)
         h = random.randint(20, 50)
 
@@ -67,13 +70,14 @@ def create_large_test_data():
 
         annotation_id += 1
 
-    # Generate 9,150 False Negatives (boxes in GT but not in PREDS)
-    for i in range(90050, 99150):
-        x1 = random.randint(0, 500)
-        y1 = random.randint(0, 500)
-        w = random.randint(20, 50)
-        h = random.randint(20, 50)
+    # Generate False Negatives (boxes in GT with no corresponding prediction)
+    for i in range(n3):
+        x1 = random.randint(0, 1000)
+        y1 = random.randint(0, 1000)
+        w = random.randint(20, 70)
+        h = random.randint(20, 70)
 
+        # Ground truth box with no prediction match
         gt_box = {
             "annotation_id": annotation_id,
             "image_id": image_id,
@@ -84,6 +88,7 @@ def create_large_test_data():
             "h": h
         }
         ground_truth["annotations"].append(gt_box)
+
         annotation_id += 1
 
     # Save data to JSON files
@@ -95,4 +100,4 @@ def create_large_test_data():
 
 
 # Run the function to generate the larger dataset
-create_large_test_data()
+create_test_data()
