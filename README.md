@@ -1,17 +1,18 @@
 # Python Performance Optimization using Numpy, JIT, Cython, TaiChi, C++, OpenMP
 
-This project consists of several implementations of COCO format dataset validation
-between ground truths and predictions.\
-It is designed to highlight the superpower of python libraries for big
-computations as well as its friendship with other languages like C++.
+This project's goal is to highlight the importance of using the right tools 
+when the code is computationally intensive.\
+The code is designed to address a computer vision task that finds the True 
+Positives (TP), False Positives (FP), and False Negatives (FN) in the 
+COCO dataset.
 
 Here, we first implemented a basic code on `v1_python` that has `Evaluator` class which
 reads two dataset in COCO format as ground truth json and prediction json and then finds 
 all True Positives (TP), False Positives (FP), False Negatives (FN) and returns their 
 corresponding annotation ids (in `evaluate` method).
 
-Since this procedure takes quite a lot of time (multiple for loops), 
-we investigate how we can improve the code performance by utilizing several options:
+Then we reimplement the same concept but utilizing tools that can give us performance
+boost:
 
 - Rewriting code with **numpy** operations.
 - **JIT** optimizations
