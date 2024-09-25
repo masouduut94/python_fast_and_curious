@@ -1,15 +1,10 @@
-"""
-Replace BoundingBox class with numpy array to speed up.
-
-"""
 import json
-from typing import List, Tuple
-
 import numpy as np
 from pathlib import Path
-from time import time
-
+from typing import List, Tuple
 from numpy.typing import NDArray
+
+
 
 
 class Evaluator:
@@ -88,13 +83,4 @@ class Evaluator:
                 fn_ids.append(gt_box[0])
 
         return tp_ids, fp_ids, fn_ids
-
-
-def measure_np_evaluator_time(gt_json_path: str, pred_json_path: str):
-    evaluator = Evaluator(ground_truth_json=gt_json_path, predictions_json=pred_json_path)
-    t1 = time()
-    tp_ids, fp_ids, fn_ids = evaluator.evaluate()
-    t2 = time()
-
-    return t2 - t1, sorted(tp_ids), sorted(fp_ids), sorted(fn_ids)
 

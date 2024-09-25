@@ -1,7 +1,7 @@
 import time
 # from v10_cpp_openmp.test import gt_json
-from v1_python.py_evaluator import measure_py_evaluator_time
-from v2_numpy.np_evaluator import measure_np_evaluator_time
+from v1_python.py_evaluator import Evaluator
+from v2_numpy.np_evaluator import Evaluator as NpEvaluator
 from v3_jit_functional.jit_evaluator import measure_jit_evaluator_time
 from v4_tai_chi.taichi_evaluator import measure_taichi_evaluator_time
 from v5_cython.evaluator import Evaluator as CyEvaluator
@@ -23,8 +23,8 @@ def check_evaluator_time(module, gt_json_path, pred_json_path):
 if __name__ == "__main__":
     gt_json_path = 'small_jsons/ground_truths.json'
     pred_json_path = 'small_jsons/predictions.json'
-    t0, tp_ids, fp_ids, fn_ids = measure_py_evaluator_time(gt_json_path, pred_json_path)
-    t1, tp1, fp1, fn1 = measure_np_evaluator_time(gt_json_path, pred_json_path)
+    t0, tp_ids, fp_ids, fn_ids = check_evaluator_time(Evaluator, gt_json_path, pred_json_path)
+    t1, tp1, fp1, fn1 = check_evaluator_time(NpEvaluator, gt_json_path, pred_json_path)
     t2, tp2, fp2, fn2 = measure_jit_evaluator_time(gt_json_path, pred_json_path)
     t3, tp3, fp3, fn3 = measure_taichi_evaluator_time(gt_json_path, pred_json_path)
     t4, tp4, fp4, fn4 = check_evaluator_time(CyEvaluator, gt_json_path, pred_json_path)

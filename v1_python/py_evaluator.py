@@ -1,11 +1,6 @@
-from time import time
-
-import matplotlib.pyplot as plt
-from matplotlib import patches
-
+import json
 from pathlib import Path
 from typing import List, Self
-import json
 
 
 class BoundingBox:
@@ -132,12 +127,3 @@ class Evaluator:
                 fn_ids.append(gt_box.annotation_id)
 
         return tp_ids, fp_ids, fn_ids
-
-def measure_py_evaluator_time(gt_json_path, pred_json_path):
-    evaluator = Evaluator(gt_json_path, pred_json_path)
-    t1 = time()
-    tp_ids, fp_ids, fn_ids = evaluator.evaluate()
-    t2 = time()
-    elapsed_time = t2 - t1
-    return elapsed_time, sorted(tp_ids), sorted(fp_ids), sorted(fn_ids)
-
