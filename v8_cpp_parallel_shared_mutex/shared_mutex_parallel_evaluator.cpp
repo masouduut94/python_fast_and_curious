@@ -66,15 +66,25 @@ SharedMutexParallelCppEvaluator::SharedMutexParallelCppEvaluator(const std::stri
 
     for (const auto& ann : gt_data["annotations"]) {
         ground_truth_boxes.emplace_back(
-            ann["annotation_id"], ann["image_id"], ann["category_id"],
-            ann["x1"], ann["y1"], ann["w"], ann["h"]
+            ann["annotation_id"],
+            ann["image_id"],
+            ann["category_id"],
+            ann["bbox"][0],
+            ann["bbox"][1],
+            ann["bbox"][2],
+            ann["bbox"][3]
         );
     }
 
     for (const auto& ann : pred_data["annotations"]) {
         predicted_boxes.emplace_back(
-            ann["annotation_id"], ann["image_id"], ann["category_id"],
-            ann["x1"], ann["y1"], ann["w"], ann["h"]
+            ann["annotation_id"],
+            ann["image_id"],
+            ann["category_id"],
+            ann["bbox"][0],
+            ann["bbox"][1],
+            ann["bbox"][2],
+            ann["bbox"][3]
         );
     }
 }
