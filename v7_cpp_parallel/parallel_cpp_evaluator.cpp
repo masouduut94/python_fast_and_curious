@@ -54,10 +54,26 @@ ParallelCppEvaluator::ParallelCppEvaluator(const std::string& ground_truth_json,
     pred_file >> pred_data;
 
     for (const auto& ann : gt_data["annotations"]) {
-        ground_truth_boxes.emplace_back(ann["annotation_id"], ann["image_id"], ann["category_id"], ann["x1"], ann["y1"], ann["w"], ann["h"]);
+        ground_truth_boxes.emplace_back(
+            ann["annotation_id"],
+            ann["image_id"],
+            ann["category_id"],
+            ann["bbox"][0],
+            ann["bbox"][1],
+            ann["bbox"][2],
+            ann["bbox"][3]
+        );
     }
     for (const auto& ann : pred_data["annotations"]) {
-        predicted_boxes.emplace_back(ann["annotation_id"], ann["image_id"], ann["category_id"], ann["x1"], ann["y1"], ann["w"], ann["h"]);
+        predicted_boxes.emplace_back(
+            ann["annotation_id"],
+            ann["image_id"],
+            ann["category_id"],
+             ann["bbox"][0],
+             ann["bbox"][1],
+             ann["bbox"][2],
+             ann["bbox"][3]
+        );
     }
 }
 
