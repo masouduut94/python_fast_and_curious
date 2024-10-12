@@ -53,12 +53,12 @@ cdef class Evaluator:
             annotation_ids[i] = data[i]['annotation_id']
             boxes[i, 0] = data[i]['image_id']
             boxes[i, 1] = data[i]['category_id']
-            boxes[i, 2] = data[i]['x1']
-            boxes[i, 3] = data[i]['y1']
-            boxes[i, 4] = data[i]['x1'] + data[i]['w']
-            boxes[i, 5] = data[i]['y1'] + data[i]['h']
-            boxes[i, 6] = data[i]['w']
-            boxes[i, 7] = data[i]['h']
+            boxes[i, 2] = data[i]['bbox'][0]
+            boxes[i, 3] = data[i]['bbox'][1]
+            boxes[i, 4] = data[i]['bbox'][0] + data[i]['bbox'][2]
+            boxes[i, 5] = data[i]['bbox'][1] + data[i]['bbox'][3]
+            boxes[i, 6] = data[i]['bbox'][2]
+            boxes[i, 7] = data[i]['bbox'][3]
 
     cpdef tuple evaluate(self):
         cdef int i, n_pred, n_gt

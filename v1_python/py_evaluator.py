@@ -96,12 +96,36 @@ class Evaluator:
         assert Path(predictions_json).is_file(), 'prediction json file not found.'
 
         with open(ground_truth_json) as f:
-            ground_truth_data = json.load(f)
+            gt_data = json.load(f)
         with open(predictions_json) as f:
-            predictions_data = json.load(f)
+            pred_data = json.load(f)
 
-        self.ground_truth_boxes = [BoundingBox(**ann) for ann in ground_truth_data['annotations']]
-        self.predicted_boxes = [BoundingBox(**ann) for ann in predictions_data['annotations']]
+        self.ground_truth_boxes = []
+        self.predicted_boxes = []
+
+        for gt in gt_data['annotations']:
+            bb = BoundingBox(
+                annotation_id=gt['annotation_id'],
+                image_id=gt['image_id'],
+                category_id=gt['category_id'],
+                x1=gt['bbox'][0],
+                y1=gt['bbox'][1],
+                w=gt['bbox'][2],
+                h=gt['bbox'][3]
+            )
+            self.ground_truth_boxes.append(bb)
+
+        for pred in pred_data['annotations']:
+            bb = BoundingBox(
+                annotation_id=pred['annotation_id'],
+                image_id=pred['image_id'],
+                category_id=pred['category_id'],
+                x1=pred['bbox'][0],
+                y1=pred['bbox'][1],
+                w=pred['bbox'][2],
+                h=pred['bbox'][3]
+            )
+            self.predicted_boxes.append(bb)
 
     def evaluate(self):
         """

@@ -9,8 +9,14 @@ ti.init(arch=ti.cpu)
 @ti.data_oriented
 def initialize_boxes(annotations, boxes):
     for i, ann in enumerate(annotations):
-        boxes[i] = [ann['x1'], ann['y1'], ann['x1'] + ann['w'], ann['y1'] + ann['h'], ann['category_id'],
-                    ann['annotation_id']]
+        boxes[i] = [
+            ann['bbox'][0],
+            ann['bbox'][1],
+            ann['bbox'][0] + ann['bbox'][2],
+            ann['bbox'][1] + ann['bbox'][3],
+            ann['category_id'],
+            ann['annotation_id']
+        ]
 
 
 @ti.func

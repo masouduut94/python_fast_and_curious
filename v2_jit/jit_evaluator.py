@@ -53,10 +53,10 @@ def load_boxes_from_json(json_path: str) -> np.ndarray:
         [(
             ann['annotation_id'],
             ann['image_id'], ann['category_id'],
-            ann['x1'],
-            ann['y1'],
-            ann['x1'] + ann['w'],
-            ann['y1'] + ann['h'])
+            ann['bbox'][0],
+            ann['bbox'][1],
+            ann['bbox'][0] + ann['bbox'][2],
+            ann['bbox'][1] + ann['bbox'][3])
             for ann in data['annotations']],
         dtype=np.float32
     )

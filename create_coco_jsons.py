@@ -25,10 +25,7 @@ def create_test_data():
             "annotation_id": annotation_id,
             "image_id": image_id,
             "category_id": category_id,
-            "x1": x1,
-            "y1": y1,
-            "w": w,
-            "h": h
+            "bbox": [x1, y1, w, h]
         }
         ground_truth["annotations"].append(gt_box)
 
@@ -36,12 +33,13 @@ def create_test_data():
             "annotation_id": annotation_id,
             "image_id": image_id,
             "category_id": category_id,
-            "x1": x1 + random.randint(-5, 5),
-            "y1": y1 + random.randint(-5, 5),
-            "w": w,
-            "h": h
+            'bbox': [
+                x1 + random.randint(-5, 5),
+                y1 + random.randint(-5, 5),
+                w,
+                h
+            ],
         }
-
         predictions["annotations"].append(pred_box)
         annotation_id += 1
 
@@ -56,10 +54,7 @@ def create_test_data():
             "annotation_id": annotation_id,
             "image_id": image_id,
             "category_id": category_id,
-            "x1": x1,
-            "y1": y1,
-            "w": w,
-            "h": h
+            "bbox": [x1, y1, w, h]
         }
         predictions["annotations"].append(pred_box)
 
@@ -76,10 +71,7 @@ def create_test_data():
             "annotation_id": annotation_id,
             "image_id": image_id,
             "category_id": category_id,
-            "x1": x1,
-            "y1": y1,
-            "w": w,
-            "h": h
+            "bbox": [x1, y1, w, h]
         }
         ground_truth["annotations"].append(gt_box)
         annotation_id += 1
@@ -91,4 +83,5 @@ def create_test_data():
     with open('small_jsons/predictions.json', 'w') as preds_file:
         json.dump(predictions, preds_file, indent=2)
 
-
+if __name__ == '__main__':
+    create_test_data()

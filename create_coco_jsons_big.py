@@ -30,10 +30,7 @@ def create_test_data():
             "annotation_id": annotation_id,
             "image_id": image_id,
             "category_id": category_id,
-            "x1": x1,
-            "y1": y1,
-            "w": w,
-            "h": h
+            "bbox": [x1, y1, w, h]
         }
         ground_truth["annotations"].append(gt_box)
 
@@ -42,10 +39,12 @@ def create_test_data():
             "annotation_id": annotation_id,
             "image_id": image_id,
             "category_id": category_id,
-            "x1": x1 + random.randint(-5, 5),
-            "y1": y1 + random.randint(-5, 5),
-            "w": w,
-            "h": h
+            'bbox': [
+                x1 + random.randint(-5, 5),
+                y1 + random.randint(-5, 5),
+                w,
+                h
+            ],
         }
         predictions["annotations"].append(pred_box)
 
@@ -61,10 +60,7 @@ def create_test_data():
             "annotation_id": annotation_id,
             "image_id": image_id,
             "category_id": category_id,
-            "x1": x1,
-            "y1": y1,
-            "w": w,
-            "h": h
+            "bbox": [x1, y1, w, h],
         }
         predictions["annotations"].append(pred_box)
 
@@ -82,10 +78,7 @@ def create_test_data():
             "annotation_id": annotation_id,
             "image_id": image_id,
             "category_id": category_id,
-            "x1": x1,
-            "y1": y1,
-            "w": w,
-            "h": h
+            "bbox": [x1, y1, w, h],
         }
         ground_truth["annotations"].append(gt_box)
 
@@ -99,5 +92,7 @@ def create_test_data():
         json.dump(predictions, preds_file, indent=2)
 
 
-# Run the function to generate the larger dataset
-create_test_data()
+if __name__ == '__main__':
+    
+    # Run the function to generate the larger dataset
+    create_test_data()
