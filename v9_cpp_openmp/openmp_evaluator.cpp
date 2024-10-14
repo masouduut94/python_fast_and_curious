@@ -60,34 +60,20 @@ OpenmpEvaluator::OpenmpEvaluator(const std::string& ground_truth_json, const std
         throw std::runtime_error("Error opening JSON files.");
     }
 
-    json gt_data;
-    json pred_data;
-
+    json gt_data, pred_data;
     gt_file >> gt_data;
     pred_file >> pred_data;
 
     for (const auto& ann : gt_data["annotations"]) {
         ground_truth_boxes.emplace_back(
-            ann["annotation_id"],
-            ann["image_id"],
-            ann["category_id"],
-            ann["bbox"][0],
-            ann["bbox"][1],
-            ann["bbox"][2],
-            ann["bbox"][3]
-        );
+            ann["annotation_id"], ann["image_id"], ann["category_id"],
+            ann["bbox"][0], ann["bbox"][1], ann["bbox"][2], ann["bbox"][3]);
     }
 
     for (const auto& ann : pred_data["annotations"]) {
         predicted_boxes.emplace_back(
-            ann["annotation_id"],
-            ann["image_id"],
-            ann["category_id"],
-            ann["bbox"][0],
-            ann["bbox"][1],
-            ann["bbox"][2],
-            ann["bbox"][3]
-        );
+            ann["annotation_id"], ann["image_id"], ann["category_id"],
+            ann["bbox"][0], ann["bbox"][1], ann["bbox"][2], ann["bbox"][3]);
     }
 }
 
