@@ -1,3 +1,5 @@
+from v1_python.py_evaluator import Evaluator
+from v2_jit.jit_evaluator import measure_jit_evaluator_time
 from v3_tai_chi.taichi_evaluator import measure_taichi_evaluator_time
 from v4_cython.evaluator import Evaluator as CyEvaluator
 from v5_parallel_cython.evaluator import Evaluator as CyParallelEvaluator
@@ -6,8 +8,6 @@ from v7_cpp_parallel.parallel_cpp_evaluator import ParallelCppEvaluator
 from v8_cpp_parallel_shared_mutex.shared_mutex_parallel_evaluator import SharedMutexParallelCppEvaluator
 from v9_cpp_openmp.openmp_evaluator import OpenmpEvaluator
 import time
-from v1_python.py_evaluator import Evaluator
-from v2_jit.jit_evaluator import measure_jit_evaluator_time
 
 
 def check_evaluator_time(module, gt_json_path, pred_json_path):
@@ -20,8 +20,8 @@ def check_evaluator_time(module, gt_json_path, pred_json_path):
 
 
 if __name__ == "__main__":
-    gt_json_path = 'small_jsons/ground_truths.json'
-    pred_json_path = 'small_jsons/predictions.json'
+    gt_json_path = 'large_jsons/ground_truths.json'
+    pred_json_path = 'large_jsons/predictions.json'
     t1, tp_ids, fp_ids, fn_ids = check_evaluator_time(Evaluator, gt_json_path, pred_json_path)
     t2, tp2, fp2, fn2 = measure_jit_evaluator_time(gt_json_path, pred_json_path)
     t3, tp3, fp3, fn3 = measure_taichi_evaluator_time(gt_json_path, pred_json_path)
@@ -32,9 +32,9 @@ if __name__ == "__main__":
     t8, tp8, fp8, fn8 = check_evaluator_time(SharedMutexParallelCppEvaluator, gt_json_path, pred_json_path)
     t9, tp9, fp9, fn9 = check_evaluator_time(OpenmpEvaluator, gt_json_path, pred_json_path)
 
-    assert tp_ids == tp2
-    assert fp_ids == fp2
-    assert fn_ids == fn2
+    assert tp_ids == tp2 == tp3 == tp4 == tp5 == tp6 == tp7 == tp8 == tp9
+    assert fp_ids == fp2 == fp3 == fp4 == fp5 == fp6 == fp7 == fp8 == fp9
+    assert fn_ids == fn2 == fn3 == fn4 == fn5 == fn6 == fn7 == fn8 == fn9
 
     p = [
         ('Simple Python', t1),
@@ -50,4 +50,4 @@ if __name__ == "__main__":
 
     p = sorted(p, key=lambda x: x[1])
     for i, (name, execution_time) in enumerate(p):
-        print(f"Rank #{i + 1}, {name} | {execution_time: .5f} seconds")
+        print(f"Rank #{i + 1}, {name} | {execution_time: .5f} seconds | {t1 / execution_time: .1f}x faster")

@@ -1,12 +1,17 @@
-# setup.py
 from setuptools import setup
 from Cython.Build import cythonize
-import numpy
+from setuptools.extension import Extension
+import numpy as np
+
+extensions = [
+    Extension(
+        "evaluator",
+        sources=["evaluator.pyx"],
+        include_dirs=[np.get_include()],
+    )
+]
 
 setup(
-    ext_modules=cythonize("evaluator.pyx",
-                          compiler_directives={'language_level' : "3", 'boundscheck': False, 'wraparound': False}),
-    include_dirs=[numpy.get_include()],
-    extra_compile_args=['-fopenmp'],  # OpenMP flags for compilation
-    extra_link_args=['-fopenmp']
+    name="Evaluator",
+    ext_modules=cythonize(extensions, language_level="3"),
 )

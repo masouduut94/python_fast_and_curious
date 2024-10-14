@@ -7,9 +7,7 @@ extensions = [
     Extension(
         "evaluator",
         sources=["evaluator.pyx"],
-        # language="c++",
         include_dirs=[np.get_include()],
-        # extra_compile_args=["-std=c++11"],
     )
 ]
 
